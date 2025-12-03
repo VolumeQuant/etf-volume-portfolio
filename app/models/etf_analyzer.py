@@ -169,10 +169,13 @@ class ETFAnalyzer:
         """
         빠른 스캔 (최근 5일 데이터만)
         실시간 모니터링용
+        
+        기본: 지수 3개 + 주요 섹터 8개 = 총 11개
         """
         if tickers is None:
-            # 주요 ETF만
-            tickers = ['XLK', 'XLF', 'XLE', 'XLY', 'SOXX', 'ITB']
+            # 지수(벤치마크) + 주요 섹터
+            from config.etf_universe import QUICK_SCAN_ETFS
+            tickers = QUICK_SCAN_ETFS
         
         try:
             df = self.collector.fetch_multiple(tickers, period="5d")

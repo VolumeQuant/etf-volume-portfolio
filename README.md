@@ -1,231 +1,174 @@
-# 📊 VolumeQuant - ETF Volume Lab
+# 🚀 ETF Pulse
 
-**v0.2.0**
+**ETF 거래량 국면분석 + AI 뉴스 브리핑 통합 대시보드**
 
-미국 ETF의 거래량 이상징후를 탐지하고 분석하는 AI 기반 트레이딩 시스템
+증권사 HTS 개발자가 만든 금융 데이터 분석 플랫폼
+
+---
 
 ## 🎯 프로젝트 목적
 
-- **이벤트 기반 탐지**: ETF 거래량 폭증/급감 실시간 감지
-- **시장 이상징후 분석**: 거래량 스파이크와 가격 반응 상관관계 분석  
-- **포트폴리오 구성**: 이벤트 기반 자동 비중 조정
-- **자동매매 준비**: 한국투자증권/키움 API 연동 확장 계획
+- **비즈니스**: 회사 내 AI/데이터 서비스 부서 직무 전환 증명
+- **기술**: React + FastAPI 풀스택 개발 역량 증명
+- **실사용**: 실제 ETF 투자 타이밍 인사이트 제공
 
-## ✨ 핵심 기능
+---
 
-### 1. 거래량 이벤트 탐지 시스템
-- ✅ yfinance 기반 실시간 데이터 수집
-- ✅ 20일 이동평균 대비 거래량 스파이크 감지
-- ✅ 4단계 이벤트 레벨 분류 (EXTREME, HIGH, MEDIUM, ALERT)
-- ✅ 거래량-가격 상관관계 분석
+## ⚡ 빠른 시작
 
-### 2. ETF 유니버스
-**섹터 ETF**: XLK, XLF, XLE, XLB, XLY, XLP, XLV, XLI, XLU, XLRE, XLC
-
-**인더스트리 ETF**: SOXX(반도체), ITB(주택), NAIL(주택3x), DPST(은행3x), XBI(바이오), ARKK(혁신) 등
-
-### 3. 웹 대시보드
-- 📈 실시간 거래량 스파이크 모니터링
-- 📊 Chart.js 기반 인터랙티브 차트
-- 🤖 AI 기반 시장 인사이트 생성 (Groq API / Rule-based)
-- ⚡ 빠른 스캔 (5일) & 전체 분석 (1년) 모드
-- 🔧 강화된 에러 처리 및 JSON 직렬화
-
-## 🚀 시작하기
-
-### 필수 요구사항
-- Python 3.10+
-- pip / conda
-
-### 설치
-
+### 1. Backend 실행
 ```bash
-# 1. 저장소 클론
-git clone <repository-url>
-cd ETF_Volume_Lab
-
-# 2. 가상환경 생성 (선택사항)
-conda create -n volumequant python=3.10
-conda activate volumequant
-
-# 3. 패키지 설치
-pip install -r requirements.txt
-
-# 4. 환경 변수 설정 (선택사항 - AI 기능용)
-# 프로젝트 루트에 .env 파일 생성
-cat > .env << EOF
-PROVIDER=groq
-GROQ_API_KEY=your_groq_api_key_here
-GROQ_MODEL=llama-3.1-8b-instant
-EOF
-
-# 또는 AI 없이 사용 (rule-based만 사용)
-# .env 파일을 만들지 않거나 PROVIDER를 비워두면 됩니다.
-# Groq API 키 발급: https://console.groq.com/
-```
-
-### 실행
-
-```bash
-# app 디렉토리로 이동
 cd app
-
-# 서버 실행
 python main.py
 ```
+→ http://localhost:8000
 
-서버가 시작되면 브라우저에서 접속:
+### 2. Frontend 실행 (새 터미널)
+```bash
+cd frontend
+npm install  # 첫 실행 시만
+npm run dev
 ```
-http://localhost:8000
-```
+→ http://localhost:5173
+
+---
+
+## 🛠️ 기술 스택
+
+### Frontend
+- React 18 + TypeScript
+- Vite (빌드 툴)
+- Tailwind CSS
+- Zustand (상태 관리)
+- Recharts (차트)
+- Axios (API 통신)
+
+### Backend
+- FastAPI
+- pandas + yfinance
+- Groq API (LLM)
+
+---
 
 ## 📁 프로젝트 구조
 
 ```
-ETF_Volume_Lab/
-├── app/
-│   ├── main.py                    # FastAPI 서버
-│   ├── config/
-│   │   └── etf_universe.py       # ETF 유니버스 & 설정
-│   ├── models/
-│   │   ├── etf_data_collector.py # 데이터 수집 모듈
-│   │   ├── volume_event_detector.py # 이벤트 탐지 엔진
-│   │   └── etf_analyzer.py       # 통합 분석 파이프라인
-│   ├── services/
-│   │   └── llm.py                # AI 분석 (Groq/Rule-based)
-│   └── static/
-│       └── index.html            # 웹 대시보드
-├── requirements.txt
-└── README.md
+etf-volume-portfolio/
+├── frontend/               # React 프론트엔드
+│   ├── src/
+│   │   ├── components/    # UI 컴포넌트
+│   │   ├── services/      # API 통신
+│   │   ├── stores/        # 상태 관리
+│   │   ├── types/         # TypeScript 타입
+│   │   └── App.tsx        # 메인 앱
+│   └── package.json
+│
+├── app/                    # FastAPI 백엔드
+│   ├── models/            # 데이터 수집 & 분석
+│   ├── services/          # LLM 서비스
+│   ├── config/            # 설정
+│   └── main.py            # API 서버
+│
+└── docs/                   # 문서
+    ├── PROJECT_SPEC.md     # 요구사항 정의서
+    └── ROADMAP_REACT.md    # 3.5개월 로드맵
 ```
 
-## 🔧 API 엔드포인트
+---
 
-### `GET /api/analysis/quick`
+## 🎨 주요 기능
+
+### Phase 1 (완료) ✅
+- [x] ETF 데이터 수집 (yfinance)
+- [x] 거래량 스파이크 탐지
+- [x] 이벤트 레벨 분류 (EXTREME/HIGH/MEDIUM/ALERT)
+- [x] React + TypeScript 프론트엔드
+- [x] ETF 카드 UI
+
+### Phase 2 (진행 중) 🚧
+- [ ] 섹터 히트맵 (11개 섹터 시각화)
+- [ ] 거래량 차트 (Recharts)
+- [ ] 백테스팅 시스템
+- [ ] 뉴스 피드 (RSS)
+
+### Phase 3 (예정) 📅
+- [ ] 알림 시스템 (텔레그램)
+- [ ] SQLite 히스토리
+- [ ] 배포 (Vercel + Railway)
+
+---
+
+## 📊 API 엔드포인트
+
+### GET `/api/analysis/quick`
 빠른 스캔 (최근 5일 데이터)
 ```bash
 curl http://localhost:8000/api/analysis/quick
 ```
 
-### `GET /api/analysis/full`
-전체 분석 (기본 1년 데이터)
+### GET `/api/analysis/full`
+전체 분석 (1년 데이터)
 ```bash
-curl http://localhost:8000/api/analysis/full
-
-# 특정 티커만 분석
-curl "http://localhost:8000/api/analysis/full?tickers=XLK,XLF,SOXX"
-
-# 기간 지정 (1y, 6mo, 3mo 등)
-curl "http://localhost:8000/api/analysis/full?period=6mo"
-
-# 티커와 기간 모두 지정
-curl "http://localhost:8000/api/analysis/full?tickers=XLK,SOXX&period=3mo"
+curl http://localhost:8000/api/analysis/full?period=1y
 ```
 
-**쿼리 파라미터**:
-- `tickers`: 쉼표로 구분된 티커 심볼 (선택사항, 기본값: 전체 유니버스)
-- `period`: 데이터 기간 (선택사항, 기본값: `1y`)
-  - 사용 가능: `1d`, `5d`, `1mo`, `3mo`, `6mo`, `1y`, `2y`, `5y`, `10y`, `ytd`, `max`
-
-### `POST /api/explain`
+### POST `/api/explain`
 AI 인사이트 생성
 ```bash
 curl -X POST http://localhost:8000/api/explain \
   -H "Content-Type: application/json" \
-  -d '{"blob": {...분석결과...}}'
+  -d '{"blob": {...}}'
 ```
-
-## 📊 거래량 스파이크 기준
-
-| 레벨 | 임계값 | 설명 |
-|------|--------|------|
-| EXTREME | 2.5x 이상 | 극단적 폭증 - 즉시 주목 |
-| HIGH | 2.0x 이상 | 강한 폭증 - 중요 이벤트 |
-| MEDIUM | 1.5x 이상 | 중간 폭증 - 모니터링 필요 |
-| ALERT | 1.3x 이상 | 주의 단계 |
-
-*기준: 20일 이동평균 대비 당일 거래량 비율*
-
-## 🎨 웹 대시보드 기능
-
-1. **빠른 스캔** 🚀
-   - 주요 6개 ETF 최근 5일 모니터링
-   - 실시간 가격 & 거래량 스파이크
-   
-2. **전체 분석** 🔍
-   - 전체 ETF 유니버스 1년 데이터 분석
-   - 이벤트 탐지 & 통계 생성
-   - 최대 스파이크 순위
-
-3. **AI 인사이트** 🤖
-   - Groq AI (LLaMA3) 기반 시장 분석
-   - Rule-based 폴백 시스템
-   - 빠른 스캔 / 전체 분석 모드별 맞춤 설명
-   - 거래량 패턴 해석 및 투자 시사점 제공
-
-4. **차트 시각화** 📊
-   - Chart.js 인터랙티브 차트
-   - 거래량 스파이크 분포
-   - 색상 코딩 (레벨별)
-
-## 🔮 확장 계획
-
-### Phase 1 (현재) ✅
-- [x] 거래량 이벤트 탐지 시스템
-- [x] 웹 대시보드
-- [x] AI 인사이트 (Groq API + Rule-based)
-- [x] 빠른 스캔 & 전체 분석 모드
-- [x] 에러 처리 및 안정성 개선
-- [x] JSON 직렬화 문제 해결
-
-### Phase 2 (진행 예정)
-- [ ] 포트폴리오 백테스팅 시뮬레이션
-- [ ] 이벤트 기반 자동 리밸런싱 로직
-- [ ] 실시간 알림 시스템 (이메일/텔레그램)
-- [ ] 데이터베이스 연동 (PostgreSQL)
-
-### Phase 3 (미래)
-- [ ] 강화학습 기반 포트폴리오 최적화
-- [ ] 한국투자증권 Open API 연동
-- [ ] 자동매매 실행 시스템
-- [ ] EPS/매출 성장률 기반 펀더멘털 통합
-
-## 🛠 기술 스택
-
-- **Backend**: Python 3.10, FastAPI, Uvicorn
-- **Data**: yfinance, pandas, numpy
-- **Visualization**: Chart.js
-- **AI**: Groq API (LLaMA3) + Rule-based 폴백
-- **Frontend**: HTML5, CSS3, Vanilla JavaScript
-- **HTTP Client**: httpx (async)
-
-## 📝 사용 예시
-
-### 1. 특정 ETF 분석
-```python
-from app.models.etf_analyzer import ETFAnalyzer
-
-analyzer = ETFAnalyzer()
-result = analyzer.run_full_pipeline(tickers=['XLK', 'SOXX'])
-print(result['summary'])
-```
-
-### 2. 커스텀 임계값 설정
-```python
-from app.models.volume_event_detector import VolumeEventDetector
-
-detector = VolumeEventDetector(
-    ma_period=30,  # 30일 이동평균
-    thresholds={
-        "extreme": 3.0,
-        "high": 2.5,
-        "medium": 2.0,
-        "alert": 1.5
-    }
-)
-```
-
-
 
 ---
 
+## 🔧 환경 변수
+
+`.env` 파일 생성 (선택사항):
+```bash
+PROVIDER=groq
+GROQ_API_KEY=your_groq_api_key_here
+GROQ_MODEL=llama-3.1-8b-instant
+```
+
+---
+
+## 📚 문서
+
+- [프로젝트 요구사항 정의서](docs/PROJECT_SPEC.md)
+- [3.5개월 로드맵](docs/ROADMAP_REACT.md)
+
+---
+
+## 🎯 로드맵 (3.5개월)
+
+| 시점 | 마일스톤 |
+|------|----------|
+| Week 2 | 섹터 히트맵 완성 |
+| Week 4 | 대시보드 v1 |
+| Week 8 | 고급 기능 완료 |
+| Week 14 | 타겟 부서 데모 🎯 |
+
+---
+
+## 🏆 목표
+
+**"퀄리티 있는 결과물로 직무 전환 성공!"**
+
+- 3.5개월 안에 프로덕션 수준 완성
+- 실제 서비스 퀄리티 증명
+- React + FastAPI 풀스택 역량 증명
+
+---
+
+## 📝 라이선스
+
+MIT License
+
+---
+
+## 💬 문의
+
+프로젝트 관련 문의는 GitHub Issues를 이용해주세요.
+
+*Last Updated: 2024-12-03*
