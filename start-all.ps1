@@ -10,7 +10,7 @@ if (-not (Test-Path $condaPython)) {
 }
 
 # Start backend server in new window
-$backendCmd = "cd '$scriptPath\app'; & '$condaPython' main.py"
+$backendCmd = "cd '$scriptPath\app'; conda run -n volumequant python main.py"
 Start-Process powershell -ArgumentList "-NoExit", "-Command", $backendCmd
 
 # Wait a bit
