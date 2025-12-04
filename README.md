@@ -1,16 +1,41 @@
 # 🚀 ETF Pulse
 
-**ETF 거래량 국면분석 + AI 뉴스 브리핑 통합 대시보드**
+> **섹터 로테이션 시그널을 자동으로 탐지하여, 투자자에게 '지금 어느 섹터로 자금이 이동하고 있는가'를 알려주는 실시간 모니터링 시스템**
 
-증권사 HTS 개발자가 만든 금융 데이터 분석 플랫폼
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+[![React](https://img.shields.io/badge/react-18.0+-61dafb.svg)](https://reactjs.org/)
+[![TypeScript](https://img.shields.io/badge/typescript-5.0+-3178c6.svg)](https://www.typescriptlang.org/)
+
+---
+
+## 📖 프로젝트 개요
+
+### 문제 (Problem)
+개인 투자자는 **섹터 로테이션**(자금 이동)을 실시간으로 파악할 수 없습니다.
+- 뉴스는 사후 보도
+- HTS는 개별 종목 중심
+- 블룸버그 단말기는 연 $24,000
+
+### 솔루션 (Solution)
+ETF Pulse는 **거래량 스파이크를 자동 탐지**하여:
+1. 11개 섹터를 히트맵으로 시각화 (HOT/COLD)
+2. AI가 "왜 이 섹터인가" 뉴스 분석
+3. 텔레그램으로 실시간 알림
+
+### 가치 (Value)
+⏱️ **아침 3분 안에 시장 국면 파악** → 투자 타이밍 개선
 
 ---
 
 ## 🎯 프로젝트 목적
 
-- **비즈니스**: 회사 내 AI/데이터 서비스 부서 직무 전환 증명
-- **기술**: React + FastAPI 풀스택 개발 역량 증명
-- **실사용**: 실제 ETF 투자 타이밍 인사이트 제공
+| 목적 | 내용 |
+|------|------|
+| **비즈니스** | HTS 개발자 → AI/데이터 서비스 직무 전환 증명 |
+| **기술** | React + FastAPI + LLM 풀스택 역량 증명 |
+| **실사용** | 본인이 실제 투자에 활용 (30일 실사용) |
+| **완료 목표** | 2025-03-20 (3.5개월) |
 
 ---
 
@@ -54,48 +79,72 @@
 ## 📁 프로젝트 구조
 
 ```
-etf-volume-portfolio/
-├── frontend/               # React 프론트엔드
+etf-pulse/
+├── 📂 frontend/               # React 18 + TypeScript
 │   ├── src/
-│   │   ├── components/    # UI 컴포넌트
-│   │   ├── services/      # API 통신
-│   │   ├── stores/        # 상태 관리
-│   │   ├── types/         # TypeScript 타입
-│   │   └── App.tsx        # 메인 앱
+│   │   ├── components/       # 재사용 컴포넌트
+│   │   │   ├── SectorHeatmap.tsx   ← 핵심!
+│   │   │   ├── VolumeChart.tsx
+│   │   │   └── EventList.tsx
+│   │   ├── pages/
+│   │   │   ├── HomePage.tsx
+│   │   │   └── TickerPage.tsx
+│   │   ├── stores/           # Zustand 상태 관리
+│   │   ├── services/         # API 통신
+│   │   └── types/            # TypeScript 인터페이스
 │   └── package.json
 │
-├── app/                    # FastAPI 백엔드
-│   ├── models/            # 데이터 수집 & 분석
-│   ├── services/          # LLM 서비스
-│   ├── config/            # 설정
-│   └── main.py            # API 서버
+├── 📂 app/                    # FastAPI Backend
+│   ├── models/
+│   │   ├── etf_data_collector.py   # WD-1: 데이터 수집
+│   │   ├── volume_event_detector.py # WD-2: 시그널 탐지
+│   │   └── sector_aggregator.py    # 섹터 집계
+│   ├── services/
+│   │   └── llm.py            # WD-6: AI 인사이트
+│   ├── config/
+│   │   └── etf_universe.py   # ETF 유니버스 정의
+│   └── main.py               # WD-4: API 서버
 │
-└── docs/                   # 문서
-    ├── PROJECT_SPEC.md     # 요구사항 정의서
-    └── ROADMAP_REACT.md    # 3.5개월 로드맵
+└── 📂 docs/                   # 프로젝트 문서
+    ├── CORE_PURPOSE.md       ← 핵심 주제 정의
+    ├── WORK_DEFINITION.md    ← 업무 정의
+    ├── PROJECT_SPEC.md       # 요구사항 명세
+    └── ROADMAP_REACT.md      # 3.5개월 타임라인
 ```
+
+### 핵심 문서 (반드시 읽어야 할 3개)
+1. **[CORE_PURPOSE.md](docs/CORE_PURPOSE.md)** - "이 프로젝트는 무엇인가?"
+2. **[WORK_DEFINITION.md](docs/WORK_DEFINITION.md)** - "어떻게 구현하는가?"
+3. **[PROJECT_SPEC.md](docs/PROJECT_SPEC.md)** - "구체적인 기능은?"
 
 ---
 
 ## 🎨 주요 기능
 
-### Phase 1 (완료) ✅
-- [x] ETF 데이터 수집 (yfinance)
-- [x] 거래량 스파이크 탐지
-- [x] 이벤트 레벨 분류 (EXTREME/HIGH/MEDIUM/ALERT)
-- [x] React + TypeScript 프론트엔드
-- [x] ETF 카드 UI
+### 현재 상태 (2024-12-04)
+```
+✅ 데이터 수집      100% | yfinance로 26개 ETF 데이터 수집
+✅ 시그널 탐지      100% | 거래량 스파이크 자동 탐지 (20일 MA 대비)
+🚧 API 서비스      70%  | FastAPI RESTful 엔드포인트
+🚧 React 프론트     40%  | TypeScript + Zustand
+⬜ 섹터 히트맵      0%   | 11개 섹터 HOT/COLD 시각화
+⬜ AI 인사이트      0%   | Groq LLM 뉴스 요약
+⬜ 알림 시스템      0%   | 텔레그램 봇
+⬜ 배포            0%   | Vercel + Railway
 
-### Phase 2 (진행 중) 🚧
-- [ ] 섹터 히트맵 (11개 섹터 시각화)
-- [ ] 거래량 차트 (Recharts)
-- [ ] 백테스팅 시스템
-- [ ] 뉴스 피드 (RSS)
+전체 진행률: 35%
+```
 
-### Phase 3 (예정) 📅
-- [ ] 알림 시스템 (텔레그램)
-- [ ] SQLite 히스토리
-- [ ] 배포 (Vercel + Railway)
+### 다음 마일스톤 (Week 2)
+- [ ] **섹터 히트맵** 완성 (최우선) 🎯
+- [ ] 거래량/가격 차트
+- [ ] 티커 상세 페이지
+- [ ] 반응형 디자인
+
+### 최종 목표 (Week 14)
+- [ ] 프로덕션 배포 완료
+- [ ] 타겟 부서 데모 🎯
+- [ ] 직무 전환 요청
 
 ---
 
@@ -134,31 +183,73 @@ GROQ_MODEL=llama-3.1-8b-instant
 
 ---
 
-## 📚 문서
+## 📚 문서 가이드
 
-- [프로젝트 요구사항 정의서](docs/PROJECT_SPEC.md)
-- [3.5개월 로드맵](docs/ROADMAP_REACT.md)
+### 처음 읽을 문서 (순서대로)
+1. **[CORE_PURPOSE.md](docs/CORE_PURPOSE.md)** ← 시작은 여기서
+   - 프로젝트의 본질 이해
+   - "왜 이 프로젝트를 하는가?"
+   - 성공의 정의
+
+2. **[WORK_DEFINITION.md](docs/WORK_DEFINITION.md)**
+   - 8개 핵심 업무 정의
+   - 업무별 책임과 범위
+   - 업무 간 인터페이스
+
+3. **[PROJECT_SPEC.md](docs/PROJECT_SPEC.md)**
+   - 구체적인 기능 요구사항
+   - 기술 스택 상세
+   - Phase별 일정
+
+### 참고 문서
+- [ROADMAP_REACT.md](docs/ROADMAP_REACT.md) - 주간 타임라인
+- [ETF_UNIVERSE_RATIONALE.md](docs/ETF_UNIVERSE_RATIONALE.md) - ETF 선정 근거
+- [QUICKSTART.md](docs/QUICKSTART.md) - 빠른 시작 가이드
 
 ---
 
-## 🎯 로드맵 (3.5개월)
+## 🗓️ 로드맵
 
-| 시점 | 마일스톤 |
-|------|----------|
-| Week 2 | 섹터 히트맵 완성 |
-| Week 4 | 대시보드 v1 |
-| Week 8 | 고급 기능 완료 |
-| Week 14 | 타겟 부서 데모 🎯 |
+```
+2024-12   2025-01   2025-02   2025-03
+  │         │         │         │
+  ├─ Week 2: 섹터 히트맵 완성 🎯
+  │
+  ├───────── Week 4: 대시보드 v1
+            │
+            ├─────── Week 8: 뉴스 연동 + 알림
+                    │
+                    ├─────── Week 14: 배포 + 데모 🎯
+```
+
+| Week | 마일스톤 | 검증 |
+|------|----------|------|
+| **2** | 섹터 히트맵 | 11개 섹터 시각화 |
+| **4** | 대시보드 v1 | 실사용 시작 |
+| **8** | 고급 기능 | 뉴스 + 알림 |
+| **14** | **타겟 부서 데모** | 🎯 직무 전환 요청 |
 
 ---
 
-## 🏆 목표
+## 🏆 목표 & 원칙
 
-**"퀄리티 있는 결과물로 직무 전환 성공!"**
+### 최종 목표
+> **"프로덕션 수준 퀄리티로 직무 전환 성공!"**
 
-- 3.5개월 안에 프로덕션 수준 완성
-- 실제 서비스 퀄리티 증명
-- React + FastAPI 풀스택 역량 증명
+### 핵심 원칙
+```
+1. 투자 추천 절대 금지 (규제 준수)
+2. 단순함 우선 (3.5개월 완성)
+3. 데이터 중심 (수치 기반 판단)
+4. 실사용 가능 (30일 실제 사용)
+```
+
+### 증명할 역량
+- ✅ React + TypeScript 프론트엔드
+- ✅ FastAPI 백엔드
+- ✅ LLM API 활용
+- ✅ 금융 도메인 이해
+- ✅ 프로덕션 배포
 
 ---
 
@@ -168,8 +259,34 @@ MIT License
 
 ---
 
-## 💬 문의
+## 🤝 기여
 
-프로젝트 관련 문의는 GitHub Issues를 이용해주세요.
+이 프로젝트는 직무 전환 포트폴리오 목적이지만, 피드백과 제안은 환영합니다!
 
-*Last Updated: 2024-12-03*
+- 🐛 버그 제보: GitHub Issues
+- 💡 기능 제안: GitHub Discussions
+- 📧 직접 문의: [이메일 주소]
+
+---
+
+## 📄 라이선스
+
+MIT License
+
+---
+
+## 📌 Quick Links
+
+| 링크 | 설명 |
+|------|------|
+| [핵심 주제](docs/CORE_PURPOSE.md) | 프로젝트 본질 이해 |
+| [업무 정의](docs/WORK_DEFINITION.md) | 구현 업무 정의 |
+| [요구사항](docs/PROJECT_SPEC.md) | 기능 명세 |
+| [로드맵](docs/ROADMAP_REACT.md) | 주간 타임라인 |
+| [빠른 시작](docs/QUICKSTART.md) | 설치 & 실행 |
+
+---
+
+*Last Updated: 2024-12-04*
+*Progress: 35% (Week 1/14)*
+
