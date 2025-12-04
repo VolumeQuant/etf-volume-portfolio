@@ -44,3 +44,6 @@ Thumbs.db
 build/
 dist/
 *.egg-info/
+
+# Node.js
+node_modules/
