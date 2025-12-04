@@ -3,7 +3,7 @@ import type { QuickScanResponse } from '../types/etf';
 import type { SectorSummary } from '../types/sector';
 import type { TickerDetail } from '../types/ticker';
 
-const API_BASE_URL = 'http://localhost:8000/api';
+const API_BASE_URL = 'http://localhost:8002/api';
 
 const api = axios.create({
   baseURL: API_BASE_URL,

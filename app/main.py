@@ -237,4 +237,6 @@ def _create_summary_for_ai(data: dict) -> dict:
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    import os
+    port = int(os.getenv("PORT", 8002))  # 기본값 8002, 환경변수로 변경 가능
+    uvicorn.run(app, host="0.0.0.0", port=port)

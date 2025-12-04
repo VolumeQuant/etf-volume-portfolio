@@ -21,7 +21,7 @@
 cd app
 python main.py
 ```
-→ http://localhost:8000
+→ http://localhost:8001
 
 ### 2. Frontend 실행 (새 터미널)
 ```bash
@@ -103,19 +103,19 @@ etf-volume-portfolio/
 ### GET `/api/analysis/quick`
 빠른 스캔 (최근 5일 데이터)
 ```bash
-curl http://localhost:8000/api/analysis/quick
+curl http://localhost:8001/api/analysis/quick
 ```
 
 ### GET `/api/analysis/full`
 전체 분석 (1년 데이터)
 ```bash
-curl http://localhost:8000/api/analysis/full?period=1y
+curl http://localhost:8001/api/analysis/full?period=1y
 ```
 
 ### POST `/api/explain`
 AI 인사이트 생성
 ```bash
-curl -X POST http://localhost:8000/api/explain \
+curl -X POST http://localhost:8001/api/explain \
   -H "Content-Type: application/json" \
   -d '{"blob": {...}}'
 ```
