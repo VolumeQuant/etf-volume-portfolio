@@ -41,40 +41,32 @@ conda install -c conda-forge nodejs -y
 
 ## 🎯 실행 방법
 
-### 1. 백엔드 실행 (첫 번째 터미널)
+### 가장 쉬운 방법 (한 번에 실행)
 
 ```powershell
-# conda 환경 활성화
-conda activate volumequant
-
-# 프로젝트 폴더로 이동
 cd C:\dev\etf-volume-portfolio
-
-# 백엔드 실행
-cd app
-python main.py
+.\start-all.ps1
 ```
 
-✅ 성공 시: `http://localhost:8001` 에서 API 서버 작동
+**이게 전부입니다!** 백엔드와 프론트엔드가 새 창에서 자동으로 실행됩니다.
+
+**접속**:
+- 프론트엔드: http://localhost:5173
+- 백엔드 API: http://localhost:8002
 
 ---
 
-### 2. 프론트엔드 실행 (두 번째 터미널)
+### 개별 실행 (필요한 경우만)
 
-**Node.js 설치 후** 실행:
-
+백엔드만 실행:
 ```powershell
-# 프로젝트 폴더로 이동
-cd C:\dev\etf-volume-portfolio\frontend
-
-# 의존성 설치 (첫 실행 시만)
-npm install
-
-# 개발 서버 실행
-npm run dev
+.\start-backend.ps1
 ```
 
-✅ 성공 시: `http://localhost:5173` 에서 React 앱 실행
+프론트엔드만 실행:
+```powershell
+.\start-frontend.ps1
+```
 
 ---
 
@@ -114,11 +106,11 @@ python main.py
 - [ ] Node.js 설치 완료
 - [ ] `node --version` 명령어 작동 확인
 - [ ] `npm --version` 명령어 작동 확인
-- [ ] 백엔드 서버 실행 (`python app/main.py`)
-- [ ] 프론트엔드 의존성 설치 (`npm install`)
-- [ ] 프론트엔드 개발 서버 실행 (`npm run dev`)
+- [ ] conda 환경 `volumequant` 존재 확인
+- [ ] 프론트엔드 의존성 설치 (`npm install` in frontend/)
+- [ ] `.\start-all.ps1` 실행!
 
 ---
 
-**모든 설정이 완료되면 두 터미널에서 각각 백엔드와 프론트엔드를 실행하세요!** 🎉
+**모든 설정이 완료되면 `.\start-all.ps1`만 실행하면 됩니다!** 🎉
 

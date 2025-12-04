@@ -16,20 +16,21 @@
 
 ## ⚡ 빠른 시작
 
-### 1. Backend 실행
-```bash
-cd app
-python main.py
+### 한 번에 실행 (PowerShell)
+```powershell
+.\start-all.ps1
 ```
-→ http://localhost:8001
+백엔드와 프론트엔드가 새 창에서 자동으로 실행됩니다.
 
-### 2. Frontend 실행 (새 터미널)
-```bash
-cd frontend
-npm install  # 첫 실행 시만
-npm run dev
+**접속**:
+- Frontend: http://localhost:5173
+- Backend: http://localhost:8002
+
+### 개별 실행
+```powershell
+.\start-backend.ps1  # 백엔드만
+.\start-frontend.ps1  # 프론트엔드만
 ```
-→ http://localhost:5173
 
 ---
 
