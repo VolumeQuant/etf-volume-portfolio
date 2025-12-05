@@ -99,3 +99,4 @@ const RecentEvents = ({ data }: RecentEventsProps) => {
 export default RecentEvents;
 
 
+
